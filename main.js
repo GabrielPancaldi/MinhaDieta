@@ -1,1 +1,1 @@
-teste
+var teste;
