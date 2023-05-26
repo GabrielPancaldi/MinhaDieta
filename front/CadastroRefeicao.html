@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MinhaDieta</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
+    <link rel="stylesheet" href="/front/CadastroAlimento.css">
+
+</head>
+
+<body class="flex-container">
+
+    <header class="flex-header">
+
+        <div class="logo">
+            <img class="dieta" src="/imgs/dieta.png" alt="">
+            <span>MinhaDieta</span>
+        </div>
+
+        <div class="header-buttons">
+            <button id="minhaRef">Minhas Refeições</button>
+            <button id="logout">Logout</button>
+        </div>
+
+    </header>
+
+    <main class="flex-main">
+        <form class="flex-form">
+            <div class="flex-label">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome">
+            </div>
+            <div class="flex-label">
+                <label for="Alimentos">Alimento</label>
+                <select name="unidades" id="unidade">
+                    <option value="a1">Alimento1</option>
+                    <option value="a2">Alimento 2</option>
+                </select>
+                <label for="quantidade">Quantidade</label>
+                <input type="text" name="quantidade" id="quantidade">
+            </div>
+
+
+            <div class="flex-button">
+                <button type="button" id="cadastro" class="cadastro">Cadastrar</button>
+            </div>
+        </form>
+    </main>
+
+
+</body>
+
+</html>
