@@ -4,9 +4,11 @@ var path = require('path');
 
 router.get('/', (req, res) => {
 
-    res.render("index");
+    res.render("sobre");
 
 });
+
+
 
 
 /*router.get('/', (req, res) => {
