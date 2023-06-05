@@ -7,6 +7,49 @@
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
     <link rel="stylesheet" href="/front/Contato.css">
 
+
+    <script>
+        const nodemailer = require("nodemailer");
+
+        var transport = nodemailer.createTransport({
+            host: "sandbox.smtp.mailtrap.io",
+            port: 2525,
+            auth: {
+                user: "2006e9a6a38961",
+                pass: "e748002560dbbf"
+            }
+        });
+
+
+        var message = {
+            from: "noreply@minhadieta.com.br",
+            to: document.getElementById("email").value,
+            subject: document.getElementById("assunto").value,
+            text: document.getElementById("descricao").value,
+            html: "<p>HTML version of the message</p>"
+        };
+
+        function enviaEmail() {
+            transport.sendMail(message, function (err) {
+                if (err) return res.status(400).json({
+                    erro: true,
+                    message: "E-mail nao enviado"
+                });
+
+                return res.json({
+                    erro: false,
+                    message: "Email enviado com sucesso"
+                });
+            });
+        }
+
+
+        const botao = document.getElementsByClassName("enviar") //captura do elemento html
+
+        botao.addEventListener("click", enviaEmail);
+
+    </script>
+
 </head>
 
 <body class="flex-container">
@@ -48,7 +91,7 @@
             </div>
 
             <div class="flex-button-enviar">
-                <button type="button" class="entrar">Enviar</button>
+                <button type="button" class="enviar" id="enviar">Enviar</button>
             </div>
 
         </div>
