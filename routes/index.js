@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+const nodemailer = require("nodemailer");
 
 router.get('/', (req, res) => {
 
@@ -29,6 +30,43 @@ router.get('/sobre', (req, res) => {
 router.get('/desenvolvedor', (req, res) => {
 
     res.render("desenvolvedor");
+
+});
+
+router.post('/envia-email', (req, res) => {
+
+    const { destinatario, assunto, descricao } = req.body;
+
+    var transport = nodemailer.createTransport({
+        host: "sandbox.smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+            user: "2006e9a6a38961",
+            pass: "e748002560dbbf"
+        }
+    });
+
+
+    var message = {
+        from: "noreply@minhadieta.com.br",
+        to: destinatario,
+        subject: assunto,
+        text: descricao,
+    };
+
+    transport.sendMail(message, function (err) {
+        if (err) {
+            console.log(err);
+            res.status(400).json({
+                erro: true,
+                message: "E-mail nao enviado"
+            });
+        } else
+            res.json({
+                erro: false,
+                message: "Email enviado com sucesso"
+            });
+    });
 
 });
 

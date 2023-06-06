@@ -66,6 +66,11 @@
 
 }
 
+.resumo {
+    color: #454B1B;
+    margin-bottom: 50px;
+}
+
 .flex-button-entrar {
     display: flex;
     justify-content: center;
