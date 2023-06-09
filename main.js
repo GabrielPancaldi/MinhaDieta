@@ -1,11 +1,17 @@
 var express = require('express');
 var indexRouter = require('./routes/index');
+var UserRouter = require('./routes/UsuariosAPI')
 var path = require('path');
-var router = express.Router();
+const session = require('express-session');
 
 const app = express();
 
 
+app.use(session({
+    secret: '13579',
+    resave: false,
+    saveUninitialized: false
+}));
 
 // view engine setup
 var mustacheExpress = require("mustache-express");
@@ -18,6 +24,7 @@ app.set('view engine', 'mustache');
 
 app.use(express.json());
 app.use('/', indexRouter);
+app.use('/usuario', UserRouter);
 
 
 app.use(express.static('public'));

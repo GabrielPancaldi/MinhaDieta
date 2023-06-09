@@ -5,7 +5,41 @@
     <meta charset="UTF-8">
     <title>MinhaDieta</title>
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
-    <link rel="stylesheet" href="/front/CadastroUsuario.css">
+    <link rel="stylesheet" href="/cadastroUsuario.css">
+
+    <script type="module">
+
+        const botao = document.getElementsByClassName("cadastro")
+
+        botao[0].addEventListener('click', () => {
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+
+            fetch('/usuario/cadastro', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nome, email, senha }),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Usuario Cadastrado com sucesso');
+                    window.location.href = "http://localhost:3000/";
+
+                } else {
+                    console.log('Erro ao cadastrar usuario');
+
+                }
+            })
+                .catch((error) => {
+                    console.error('Erro:', error);
+
+                });
+
+        })
+
+    </script>
 
 </head>
 

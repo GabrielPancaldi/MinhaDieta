@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 const nodemailer = require("nodemailer");
+const { sucess, fail } = require("../data/resposta")
+const UsersDAO = require("../model/Usuarios")
+const jwt = require('jsonwebtoken')
+
 
 router.get('/', (req, res) => {
 
@@ -70,12 +74,42 @@ router.post('/envia-email', (req, res) => {
 
 });
 
+router.post('/login', async (req, res) => {
+    const { email, senha } = req.body
+
+    try {
+        const obj = await UsersDAO.buscaPorEmail(email);
+
+        if (obj && obj.senha_usuario == senha) {
+            // Permissao = Criar token
+            const token = jwt.sign({ email: email }, '13579', {
+                expiresIn: '1 hr'
+            });
+
+            req.session.token = token;
 
 
 
-/*router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../front', 'Index.html'));
+            res.json({ status: true, token: token, email: email });
+        } else {
+            // Sem permissao = sem token
+            res.status(403).json({ status: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: false });
+    }
 })
-*/
+
+
+router.get('/meu-perfil', (req, res) => {
+    res.sendFile(path.join(__dirname, '../front', 'Usuario.html'));
+})
+
+
+router.get('/inicial', (req, res) => {
+    res.sendFile(path.join(__dirname, '../front', 'inicial.html'));
+})
+
 
 module.exports = router;

@@ -7,6 +7,40 @@
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
     <link rel="stylesheet" href="/front/Index.css">
 
+
+    <script type="module">
+
+        const botao = document.getElementsByClassName("entrar");
+
+        botao[0].addEventListener('click', () => {
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, senha }),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Usuario logado com sucesso');
+                    window.location.href = "Inicial.html";
+
+                } else {
+                    console.log('Erro ao logar');
+
+                }
+            })
+                .catch((error) => {
+                    console.error('Erro:', error);
+
+                });
+        })
+
+
+    </script>
+
 </head>
 
 <body class="flex-container">
@@ -38,7 +72,7 @@
             </div>
 
             <div class="flex-button-entrar">
-                <button type="button" class="entrar">Entrar</button>
+                <button type="button" class="entrar" id="entrar">Entrar</button>
             </div>
 
         </div>

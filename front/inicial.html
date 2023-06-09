@@ -7,6 +7,20 @@
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
     <link rel="stylesheet" href="/front/Inicial.css">
 
+    <script type="module">
+
+        window.onload = () => {
+
+            const botaoPerfil = document.getElementById("perfil")
+
+            botaoPerfil.addEventListener('click', () => {
+                window.location.href = "http://localhost:3000/meu-perfil";
+            })
+
+        }
+
+    </script>
+
 </head>
 
 <body class="flex-container">
@@ -19,6 +33,7 @@
         </div>
 
         <div class="header-buttons">
+            <button id="perfil">Meu perfil</button>
             <button id="logout">Logout</button>
         </div>
 
