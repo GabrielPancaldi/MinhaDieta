@@ -47,6 +47,36 @@
 
         })
 
+        const botaoExcluir = document.getElementsByClassName("delete")
+
+        botaoExcluir[0].addEventListener('click', () =>{
+
+        const id = user.id;
+
+
+        fetch('/usuario/meu-perfil/excluir', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id}),
+        }).then((response) => {
+            if (response.ok) {
+                console.log('Usuario Excluido com sucesso');
+                window.location.href = "http://localhost:3000/";
+
+            } else {
+                console.log('Erro ao Excluir usuario');
+
+            }
+        })
+            .catch((error) => {
+                console.error('Erro:', error);
+
+            });
+
+
+        })
 
 
 

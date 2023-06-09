@@ -13,11 +13,14 @@ router.use((req, res, next) => {
     next();
 })
 
+// rota pra carregar a pagina de cadastro
+
 router.get('/cadastrouser', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'CadastroUsuario.html'));
 })
 
 
+// rota para carregar os dados de um usuario
 
 router.get('/meus-dados', async (req, res) => {
 
@@ -36,6 +39,7 @@ router.get('/meus-dados', async (req, res) => {
 })
 
 
+// rota para o cadastro de um novo usuario
 
 router.post("/cadastro", (req, res) => {
     const { nome, email, senha } = req.body
@@ -49,7 +53,7 @@ router.post("/cadastro", (req, res) => {
 
 })
 
-
+//rota para alteração do perfil do usuario
 
 router.put("/meu-perfil/alterar", (req, res) => {
     const { id, nome, email, senha } = req.body;
@@ -76,15 +80,23 @@ router.put("/meu-perfil/alterar", (req, res) => {
 });
 
 
-router.delete("/:id", (req, res) => {
-    TimesDAO.excluir(req.params.id).then(time => {
-        if (time)
-            res.json(sucess(time))
+// rota para exclusao do perfil do usuario
+
+router.delete("/meu-perfil/excluir", (req, res) => {
+    const id = req.body.id;
+
+
+
+    UsersDAO.excluir(id).then(usuario => {
+        if (usuario) {
+            req.session.token = null;
+            res.json(sucess(id))
+        }
         else
-            res.status(500).json(fail("Time não encontrado"))
+            res.status(500).json(fail("Usuario não encontrado"))
     }).catch(err => {
         console.log(err)
-        res.status(500).json(fail("Falha ao excluir o time"))
+        res.status(500).json(fail("Falha ao excluir o usuario"))
     })
 
 })

@@ -37,6 +37,8 @@ router.get('/desenvolvedor', (req, res) => {
 
 });
 
+// rota para envio de e-mail
+
 router.post('/envia-email', (req, res) => {
 
     const { destinatario, assunto, descricao } = req.body;
@@ -74,6 +76,8 @@ router.post('/envia-email', (req, res) => {
 
 });
 
+// rota pra o login do usuario
+
 router.post('/login', async (req, res) => {
     const { email, senha } = req.body
 
@@ -101,11 +105,13 @@ router.post('/login', async (req, res) => {
     }
 })
 
+//rota para carregar o perfil do usuario
 
 router.get('/meu-perfil', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'Usuario.html'));
 })
 
+//rota para carregar a página inicial do sistema
 
 router.get('/inicial', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'inicial.html'));
