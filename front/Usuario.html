@@ -9,6 +9,47 @@
 
     <script type=module>
 
+        const user = {};
+
+        const botao = document.getElementsByClassName("alterar")
+
+        
+        botao[0].addEventListener('click', () =>{
+
+
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const senha = document.getElementById("senha").value;
+            const id = user.id;
+
+            console.log(id);
+
+            fetch('/usuario/meu-perfil/alterar', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id,  nome, email, senha }),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Usuario alterado com sucesso');
+
+                } else {
+                    console.log('Erro ao alterar usuario');
+
+                }
+            })
+                .catch((error) => {
+                    console.error('Erro:', error);
+
+                });
+
+
+        })
+
+
+
+
         window.onload = async () => {
         try {
             
@@ -20,6 +61,7 @@
             document.getElementById('nome').value = userData.nome_usuario;
             document.getElementById('email').value = userData.email_usuario;
             document.getElementById('senha').value = userData.senha_usuario;
+            user.id = userData.id;
 
 
             console.log('Dados do usuário carregados com sucesso!');
@@ -29,7 +71,11 @@
         } catch (error) {
             console.error('Erro ao obter os dados do usuário:', error);
         }
+
         };
+
+        
+        
 
 
         </script>

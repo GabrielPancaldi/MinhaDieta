@@ -51,31 +51,30 @@ router.post("/cadastro", (req, res) => {
 
 
 
+router.put("/meu-perfil/alterar", (req, res) => {
+    const { id, nome, email, senha } = req.body;
 
-
-router.put("/:id", (req, res) => {
-    const { id } = req.params
-    const { nome, estado, cidade } = req.body
-
-    let obj = {}
-    if (nome) obj.nome = nome
-    if (estado) obj.estado = estado
-    if (cidade) obj.cidade = cidade
+    let obj = {};
+    if (nome) obj.nome_usuario = nome;
+    if (email) obj.email_usuario = email;
+    if (senha) obj.senha_usuario = senha;
 
     if (obj == {}) {
         return res.status(500).json(fail("Nenhum atributo foi modificado"))
     }
 
-    TimesDAO.editar(id, obj).then(time => {
-        if (time)
-            res.json(sucess(time))
+    UsersDAO.editar(id, obj).then(usuario => {
+        if (usuario)
+            res.json(sucess(usuario))
         else
-            res.status(500).json(fail("Time nao encontrado"))
+            res.status(500).json(fail("Usuario nao encontrado"))
     }).catch(err => {
         console.log(err)
-        res.status(500).json(fail("falha ao alterar o time"))
+        res.status(500).json(fail("falha ao alterar o usuario"))
     })
-})
+
+});
+
 
 router.delete("/:id", (req, res) => {
     TimesDAO.excluir(req.params.id).then(time => {
