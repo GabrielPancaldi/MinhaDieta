@@ -9,7 +9,7 @@ const UsersDAO = require("../model/Usuarios")
 
 
 router.use((req, res, next) => {
-    const token = req.session.token;
+    const token = req.session.user.token;
     next();
 })
 
@@ -24,7 +24,7 @@ router.get('/cadastrouser', (req, res) => {
 
 router.get('/meus-dados', async (req, res) => {
 
-    const token = req.session.token;
+    const token = req.session.user.token;
 
     const dados = jwt.verify(token, '13579');
 

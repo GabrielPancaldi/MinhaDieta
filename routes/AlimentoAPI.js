@@ -5,11 +5,12 @@ const jwt = require('jsonwebtoken')
 
 
 const { sucess, fail } = require("../data/resposta")
-const UsersDAO = require("../model/Usuarios")
+const AlimentoDAO = require("../model/Alimento")
 
 
 router.use((req, res, next) => {
-    const token = req.session.token;
+    const token = req.session.user.token;
+    const id = req.session.user.id;
     next();
 })
 
@@ -31,7 +32,7 @@ router.get('/cadastroAlimento', (req, res) => {
 
 router.get('/meus-alimentos', async (req, res) => {
 
-    const token = req.session.token;
+    const token = req.session.user.token;
 
     const dados = jwt.verify(token, '13579');
 
@@ -49,13 +50,16 @@ router.get('/meus-alimentos', async (req, res) => {
 // rota para o cadastro de um novo alimento
 
 router.post("/cadastro", (req, res) => {
-    const { nome, email, senha } = req.body
 
-    UsersDAO.cadastrar(nome, email, senha).then(usuario => {
-        res.json(sucess(usuario))
+    const { nome, medida } = req.body
+    const id = req.session.user.id;
+
+
+    AlimentoDAO.cadastrar(nome, medida, id).then(alimento => {
+        res.json(sucess(alimento))
     }).catch(err => {
         console.log(err)
-        res.status(500).json(fail("Não foi possivel salvar o usuario"))
+        res.status(500).json(fail("Não foi possivel salvar o alimento"))
     })
 
 })

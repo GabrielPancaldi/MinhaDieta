@@ -7,6 +7,44 @@
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
     <link rel="stylesheet" href="/front/CadastroAlimento.css">
 
+    <script type="module">
+
+        const botaoCad = document.getElementsByClassName("cadastro");
+
+        botaoCad[0].addEventListener('click', () => {
+
+            const nome = document.getElementById("nome").value;
+            const medida = document.getElementById("unidade").value;
+
+            fetch('/alimento/cadastro', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nome, medida }),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Alimento Cadastrado com sucesso');
+
+
+                } else {
+                    console.log('Erro ao cadastrar alimento');
+
+                }
+            })
+                .catch((error) => {
+                    console.error('Erro:', error);
+
+                });
+
+        })
+
+
+
+
+    </script>
+
+
 </head>
 
 <body class="flex-container">

@@ -90,9 +90,10 @@ router.post('/login', async (req, res) => {
                 expiresIn: '1 hr'
             });
 
-            req.session.token = token;
-
-
+            req.session.user = {
+                token: token,
+                id: obj.id
+            }
 
             res.json({ status: true, token: token, email: email });
         } else {
