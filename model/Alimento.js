@@ -18,6 +18,10 @@ module.exports = {
         return alimentos;
     },
 
+    buscaPorFK: async function (id_usuario) {
+        return await AlimentoModel.findAll({ where: { id_usuario: id_usuario }, raw: true });
+    },
+
 
     cadastrar: async function (nome_alimento, medida_alimento, id_usuario) {
         const alimento = await AlimentoModel.create({

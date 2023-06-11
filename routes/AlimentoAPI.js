@@ -18,7 +18,7 @@ router.use((req, res, next) => {
 // rota pra carregar a pagina de alimentos
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../front', 'Alimento.html'));
+    res.sendFile(path.join(__dirname, '../front', 'Alimentos.html'));
 })
 
 // rota pra carregar a pagina de cadastro de alimentos
@@ -32,12 +32,11 @@ router.get('/cadastroAlimento', (req, res) => {
 
 router.get('/meus-alimentos', async (req, res) => {
 
-    const token = req.session.user.token;
 
-    const dados = jwt.verify(token, '13579');
+    const id = req.session.user.id;
 
     try {
-        const obj = await UsersDAO.buscaPorEmail(dados.email)
+        const obj = await AlimentoDAO.buscaPorFK(id)
 
         res.json(obj);
     } catch (error) {

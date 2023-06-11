@@ -5,7 +5,70 @@
     <meta charset="UTF-8">
     <title>MinhaDieta</title>
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
-    <link rel="stylesheet" href="/front/Alimentos.css">
+    <link rel="stylesheet" type="text/css" href="stylesheet/alimento.css">
+
+    <script type="module">
+
+        const cardVacina = (nomeAli, medidaAli, id) => {
+
+            let card = document.createElement("div")
+            card.className = "alimento-item"
+
+
+            let spanNomeAli = document.createElement("span")
+            spanNomeAli.className = "nomeAli"
+            spanNomeAli.innerHTML = nomeAli;
+
+            let medida = document.createElement("span")
+            medida.className = "unidade"
+            medida.innerHTML = medidaAli;
+
+
+            const inputHiddenId = document.createElement("input")
+            inputHiddenId.type = 'hidden'
+            inputHiddenId.hidden = id
+
+            card.appendChild(spanNomeAli)
+            card.appendChild(medida)
+            card.appendChild(inputHiddenId)
+
+
+            document.getElementById("alimento-container").appendChild(card)
+        }
+
+
+        window.onload = async () => {
+            try {
+
+                const response = await fetch('/alimento/meus-alimentos');
+
+                if (response.ok) {
+                    const alimentoData = await response.json();
+
+                    
+                console.log(alimentoData);
+
+                
+                for(const objeto of alimentoData){
+
+                    cardVacina(objeto.nome_alimento, objeto.medida_alimento, objeto.id);
+
+                }
+
+
+                    console.log('Dados do alimento carregados com sucesso!');
+                } else {
+                    console.error('Erro ao obter os dados do alimento:', response.status);
+                }
+            } catch (error) {
+                console.error('Erro ao obter os dados do alimento:', error);
+            }
+
+        };
+
+
+    </script>
+
 
 </head>
 
@@ -27,7 +90,7 @@
 
 
     <main class="flex-main">
-        <div class="alimento-container">
+        <div class="alimento-container" id="alimento-container">
             <div class="alimento-item">
                 <span class="nomeAli">Ovo</span><br>
                 <span class="unidade">Unidade</span><br>
