@@ -7,16 +7,16 @@ const jwt = require('jsonwebtoken')
 const { sucess, fail } = require("../data/resposta")
 const UsersDAO = require("../model/Usuarios")
 
-
-router.use((req, res, next) => {
-    const token = req.session.user.token;
-    next();
-})
-
 // rota pra carregar a pagina de cadastro
 
 router.get('/cadastrouser', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'CadastroUsuario.html'));
+})
+
+
+router.use((req, res, next) => {
+    const token = req.session.user.token;
+    next();
 })
 
 
