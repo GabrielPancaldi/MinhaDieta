@@ -50,7 +50,7 @@ module.exports = {
     },
 
     buscaPorID: async function (id) {
-        return await AlimentoModel.findByPk(id)
+        return await AlimentoModel.findOne({where: {id : id}, raw: true})
     }
 
 

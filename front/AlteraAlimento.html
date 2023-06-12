@@ -9,36 +9,40 @@
 
     <script type="module">
 
-        const botaoCad = document.getElementsByClassName("cadastro");
+    const alimento = {};    
 
-        botaoCad[0].addEventListener('click', () => {
+    window.onload = async () => {
+        try {
 
-            const nome = document.getElementById("nome").value;
-            const medida = document.getElementById("unidade").value;
+            var queryString = window.location.search;
 
-            fetch('/alimento/cadastro', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ nome, medida }),
-            }).then((response) => {
-                if (response.ok) {
-                    console.log('Alimento Cadastrado com sucesso');
+            // Criando um objeto URLSearchParams com a query string
+            var params = new URLSearchParams(queryString);
 
+            // Obtendo o valor do parâmetro "id" da query string
+            var id = params.get("id");
+            console.log(id);            
+            
+            const response = await fetch('/alimento/meus-alimentos/' + id);
 
-                } else {
-                    console.log('Erro ao cadastrar alimento');
+            if (response.ok) {
+            const alimentoData = await response.json();
 
-                }
-            })
-                .catch((error) => {
-                    console.error('Erro:', error);
+            console.log(alimentoData);
 
-                });
+            document.getElementById('nome').value = alimentoData.nome_alimento;
+            document.getElementById('unidade').value = alimentoData.medida_alimento;
+                
+       
+            console.log('Dados do usuário carregados com sucesso!');
+            } else {
+            console.error('Erro ao obter os dados do usuário:', response.status);
+            }
+        } catch (error) {
+            console.error('Erro ao obter os dados do usuário:', error);
+        }
 
-        })
-
+        };
 
 
     </script>
@@ -56,7 +60,6 @@
         </div>
 
         <div class="header-buttons">
-            <button id="minhaRef">Minhas Refeições</button>
             <button id="logout">Logout</button>
         </div>
 
@@ -87,7 +90,7 @@
 
 
             <div class="flex-button">
-                <button type="button" id="cadastro" class="cadastro">Cadastrar</button>
+                <button type="button" id="alterar" class="alterar">Alterar</button>
             </div>
         </form>
     </main>

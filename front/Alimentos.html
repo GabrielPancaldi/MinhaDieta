@@ -9,6 +9,10 @@
 
     <script type="module">
 
+        
+
+
+
         const cardVacina = (nomeAli, medidaAli, id) => {
 
             let card = document.createElement("div")
@@ -31,6 +35,10 @@
             card.appendChild(spanNomeAli)
             card.appendChild(medida)
             card.appendChild(inputHiddenId)
+
+            card.addEventListener("click", () => {
+                window.location.href = "http://localhost:3000/alimento/editarAlimento?id=" + id
+            })
 
 
             document.getElementById("alimento-container").appendChild(card)
@@ -89,7 +97,10 @@
     </header>
 
 
+
     <main class="flex-main">
+
+
         <div class="alimento-container" id="alimento-container">
             <div class="alimento-item">
                 <span class="nomeAli">Ovo</span><br>

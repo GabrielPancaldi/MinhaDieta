@@ -27,6 +27,12 @@ router.get('/cadastroAlimento', (req, res) => {
     res.sendFile(path.join(__dirname, '../front', 'CadastroAlimento.html'));
 })
 
+//rota para carregar a página de alteração de alimentos
+
+router.get('/editarAlimento', (req, res) => {
+    res.sendFile(path.join(__dirname, '../front', 'AlteraAlimento.html'));
+})
+
 
 // rota para carregar os dados dos alimentos e listar na página inicial
 
@@ -37,6 +43,25 @@ router.get('/meus-alimentos', async (req, res) => {
 
     try {
         const obj = await AlimentoDAO.buscaPorFK(id)
+
+        res.json(obj);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: false });
+    }
+})
+
+
+// rota para listar o alimento na página de alteração
+
+router.get('/meus-alimentos/:id', async (req, res) => {
+
+    const id = req.params.id;
+
+    console.log(id);
+
+    try {
+        const obj = await AlimentoDAO.buscaPorID(id)
 
         res.json(obj);
     } catch (error) {
