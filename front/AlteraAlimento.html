@@ -9,7 +9,75 @@
 
     <script type="module">
 
-    const alimento = {};    
+    const alimento = {};
+    
+    
+    const botao = document.getElementsByClassName("alterar")
+
+        
+        botao[0].addEventListener('click', () =>{
+
+
+            const nome = document.getElementById("nome").value;
+            const medida = document.getElementById("unidade").value;
+            const id = alimento.id;
+
+            fetch('/alimento/alterar', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id, nome, medida}),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Alimento alterado com sucesso');
+
+                } else {
+                    console.log('Erro ao alterar alimento');
+
+                }
+            })
+                .catch((error) => {
+                    console.error('Erro:', error);
+
+                });
+
+
+        })
+
+        const botaoExcluir = document.getElementsByClassName("delete")
+
+        botaoExcluir[0].addEventListener('click', () =>{
+
+        const id = alimento.id;
+
+
+        fetch('/alimento/excluir', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id}),
+        }).then((response) => {
+            if (response.ok) {
+                console.log('Alimento Excluido com sucesso');
+                window.location.href = "http://localhost:3000/alimento";
+
+            } else {
+                console.log('Erro ao excluir alimento');
+
+            }
+        })
+            .catch((error) => {
+                console.error('Erro:', error);
+
+            });
+
+
+        })
+
+    
+
 
     window.onload = async () => {
         try {
@@ -32,14 +100,15 @@
 
             document.getElementById('nome').value = alimentoData.nome_alimento;
             document.getElementById('unidade').value = alimentoData.medida_alimento;
+            alimento.id = alimentoData.id;
                 
        
-            console.log('Dados do usuário carregados com sucesso!');
+            console.log('Dados do alimento carregados com sucesso!');
             } else {
-            console.error('Erro ao obter os dados do usuário:', response.status);
+            console.error('Erro ao obter os dados do alimento:', response.status);
             }
         } catch (error) {
-            console.error('Erro ao obter os dados do usuário:', error);
+            console.error('Erro ao obter os dados do alimento:', error);
         }
 
         };
@@ -86,7 +155,7 @@
                     <option value="Colher de sopa">Colher de sopa</option>
                     <option value="Colher de chá">Colher de chá</option>S
                 </select>
-            </div>S
+            </div>
 
 
             <div class="flex-button">

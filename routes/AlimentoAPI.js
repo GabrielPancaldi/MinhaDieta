@@ -91,25 +91,24 @@ router.post("/cadastro", (req, res) => {
 //rota para alteração do alimento
 
 router.put("/alterar", (req, res) => {
-    const { id, nome, email, senha } = req.body;
+    const { id, nome, medida} = req.body;
 
     let obj = {};
-    if (nome) obj.nome_usuario = nome;
-    if (email) obj.email_usuario = email;
-    if (senha) obj.senha_usuario = senha;
+    if (nome) obj.nome_alimento = nome;
+    if (medida) obj.medida_alimento = medida;
 
     if (obj == {}) {
         return res.status(500).json(fail("Nenhum atributo foi modificado"))
     }
 
-    UsersDAO.editar(id, obj).then(usuario => {
-        if (usuario)
-            res.json(sucess(usuario))
+    AlimentoDAO.editar(id, obj).then(alimento => {
+        if (alimento)
+            res.json(sucess(alimento))
         else
-            res.status(500).json(fail("Usuario nao encontrado"))
+            res.status(500).json(fail("Alimento nao encontrado"))
     }).catch(err => {
         console.log(err)
-        res.status(500).json(fail("falha ao alterar o usuario"))
+        res.status(500).json(fail("falha ao alterar o Alimento"))
     })
 
 });
@@ -119,19 +118,17 @@ router.put("/alterar", (req, res) => {
 
 router.delete("/excluir", (req, res) => {
     const id = req.body.id;
-
-
-
-    UsersDAO.excluir(id).then(usuario => {
-        if (usuario) {
+   
+    AlimentoDAO.excluir(id).then(alimento => {
+        if (alimento) {
             req.session.token = null;
             res.json(sucess(id))
         }
         else
-            res.status(500).json(fail("Usuario não encontrado"))
+            res.status(500).json(fail("Alimento não encontrado"))
     }).catch(err => {
         console.log(err)
-        res.status(500).json(fail("Falha ao excluir o usuario"))
+        res.status(500).json(fail("Falha ao excluir o Alimento"))
     })
 
 })
