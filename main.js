@@ -2,6 +2,7 @@ var express = require('express');
 var indexRouter = require('./routes/index');
 var UserRouter = require('./routes/UsuariosAPI')
 var AlimentoRouter = require('./routes/AlimentoAPI');
+var RefeicaoRouter = require('./routes/RefeicaoAPI');
 var path = require('path');
 const session = require('express-session');
 
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use('/', indexRouter);
 app.use('/usuario', UserRouter);
 app.use('/alimento', AlimentoRouter);
+app.use('/refeicao', RefeicaoRouter);
 
 
 

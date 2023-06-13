@@ -10,10 +10,7 @@
     <script type="module">
 
         
-
-
-
-        const cardVacina = (nomeAli, medidaAli, id) => {
+        const cardAlimento = (nomeAli, medidaAli, id) => {
 
             let card = document.createElement("div")
             card.className = "alimento-item"
@@ -59,7 +56,7 @@
                 
                 for(const objeto of alimentoData){
 
-                    cardVacina(objeto.nome_alimento, objeto.medida_alimento, objeto.id);
+                    cardAlimento(objeto.nome_alimento, objeto.medida_alimento, objeto.id);
 
                 }
 
