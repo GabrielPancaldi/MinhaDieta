@@ -49,7 +49,7 @@ router.get('/minhas-refeicoes', async (req, res) => {
 
 // rota para listar o alimento na página de alteração
 
-router.get('/meus-alimentos/:id', async (req, res) => {
+router.get('/minhas-refeicoes/:id', async (req, res) => {
 
     const id = req.params.id;
 
@@ -83,27 +83,32 @@ router.post("/cadastro", (req, res) => {
 
 })
 
-//rota para alteração do alimento
+//rota para alteração da refeicao
 
 router.put("/alterar", (req, res) => {
-    const { id, nome, medida} = req.body;
+    const { id, nome, ali1, quant1, ali2, quant2, ali3, quant3} = req.body;
 
     let obj = {};
-    if (nome) obj.nome_alimento = nome;
-    if (medida) obj.medida_alimento = medida;
+    if (nome) obj.nome_refeicao = nome;
+    if (ali1) obj.nome_alimento_1 = ali1;
+    if (quant1) obj.quantidade_alimento_1 = quant1;
+    if (ali2) obj.nome_alimento_2 = ali2;
+    if (quant2) obj.quantidade_alimento_2 = quant2;
+    if (ali3) obj.nome_alimento_3 = ali3;
+    if (quant3) obj.quantidade_alimento_3 = quant3;
 
     if (obj == {}) {
         return res.status(500).json(fail("Nenhum atributo foi modificado"))
     }
 
-    AlimentoDAO.editar(id, obj).then(alimento => {
-        if (alimento)
-            res.json(sucess(alimento))
+    RefeicaoDAO.editar(id, obj).then(refeicao => {
+        if (refeicao)
+            res.json(sucess(refeicao))
         else
-            res.status(500).json(fail("Alimento nao encontrado"))
+            res.status(500).json(fail("Refeicao nao encontrada"))
     }).catch(err => {
         console.log(err)
-        res.status(500).json(fail("falha ao alterar o Alimento"))
+        res.status(500).json(fail("falha ao alterar a Refeicao"))
     })
 
 });
@@ -114,16 +119,16 @@ router.put("/alterar", (req, res) => {
 router.delete("/excluir", (req, res) => {
     const id = req.body.id;
    
-    AlimentoDAO.excluir(id).then(alimento => {
-        if (alimento) {
+    RefeicaoDAO.excluir(id).then(refeicao => {
+        if (refeicao) {
             req.session.token = null;
             res.json(sucess(id))
         }
         else
-            res.status(500).json(fail("Alimento não encontrado"))
+            res.status(500).json(fail("Refeicao não encontrada"))
     }).catch(err => {
         console.log(err)
-        res.status(500).json(fail("Falha ao excluir o Alimento"))
+        res.status(500).json(fail("Falha ao excluir a Refeicao"))
     })
 
 })

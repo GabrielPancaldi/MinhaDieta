@@ -5,7 +5,146 @@
     <meta charset="UTF-8">
     <title>MinhaDieta</title>
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
-    <link rel="stylesheet" href="/front/CadastroRefeicao.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheet/alteraRefeicao.css">
+
+    <script type="module">
+
+        const refeicao = {};
+
+        const botao = document.getElementsByClassName("alterar")
+
+        
+        botao[0].addEventListener('click', () =>{
+
+
+        const nome = document.getElementById('nome').value 
+        const ali1 = document.getElementById('unidade1').value
+        const quant1 = document.getElementById('quantidade1').value
+        const ali2 = document.getElementById('unidade2').value 
+        const quant2 = document.getElementById('quantidade2').value
+        const ali3 = document.getElementById('unidade3').value
+        const quant3 =  document.getElementById('quantidade3').value
+        const id = refeicao.id;
+
+            fetch('/refeicao/alterar', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id, nome, ali1, quant1, ali2, quant2, ali3, quant3}),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Alimento alterado com sucesso');
+
+                } else {
+                    console.log('Erro ao alterar alimento');
+
+                }
+            })
+                .catch((error) => {
+                    console.error('Erro:', error);
+
+                });
+
+
+        })
+
+        window.onload = async () => {
+
+        try {
+
+        const response = await fetch('/alimento/meus-alimentos');
+
+        if (response.ok) {
+            const RefeicaoData = await response.json();
+
+        for(let i = 1; i<=3; i++){
+
+            let cadSel = document.createElement("div");
+            cadSel.className = "flex-select";
+
+            const labelRef = document.createElement("label")
+            labelRef.textContent = "Alimento " + i;
+
+            const selectRef = document.createElement('select');
+            selectRef.setAttribute('id', 'unidade' + i);
+            
+            for(const objeto of RefeicaoData){
+                
+                const optionRef = document.createElement('option')
+                optionRef.value = objeto.nome_alimento
+                optionRef.textContent = objeto.nome_alimento
+                selectRef.appendChild(optionRef)
+                
+            }
+
+            const labelRef2 = document.createElement("label")
+            labelRef2.textContent = "Quantidade";
+
+            const inputRef = document.createElement("input")
+            inputRef.setAttribute('type', 'text');
+            inputRef.setAttribute('id', 'quantidade' + i);
+
+            cadSel.appendChild(labelRef);
+            cadSel.appendChild(selectRef);
+            cadSel.appendChild(labelRef2);
+            cadSel.appendChild(inputRef);
+
+
+            document.getElementById("flex-form").appendChild(cadSel);
+
+        }
+
+            console.log('Dados do alimento carregados com sucesso!');
+        } else {
+            console.error('Erro ao obter os dados do alimento:', response.status);
+        }
+        } catch (error) {
+        console.error('Erro ao obter os dados do alimento:', error);
+        }
+
+        try {
+
+        var queryString = window.location.search;
+
+        // Criando um objeto URLSearchParams com a query string
+        var params = new URLSearchParams(queryString);
+
+        // Obtendo o valor do parâmetro "id" da query string
+        var id = params.get("id");
+        console.log(id);            
+
+        const response = await fetch('/refeicao/minhas-refeicoes/' + id);
+
+        if (response.ok) {
+        const refeicaoData = await response.json();
+
+        console.log(refeicaoData);
+
+        document.getElementById('nome').value = refeicaoData.nome_refeicao;
+        document.getElementById('unidade1').value = refeicaoData.nome_alimento_1;
+        document.getElementById('quantidade1').value = refeicaoData.quantidade_alimento_1;
+        document.getElementById('unidade2').value = refeicaoData.nome_alimento_2;
+        document.getElementById('quantidade2').value = refeicaoData.quantidade_alimento_2;
+        document.getElementById('unidade3').value = refeicaoData.nome_alimento_3;
+        document.getElementById('quantidade3').value = refeicaoData.quantidade_alimento_3;
+        refeicao.id = refeicaoData.id;
+        
+            
+
+        console.log('Dados do alimento carregados com sucesso!');
+        } else {
+        console.error('Erro ao obter os dados do alimento:', response.status);
+        }
+        } catch (error) {
+        console.error('Erro ao obter os dados do alimento:', error);
+        }
+
+        
+
+        }
+
+    </script>
 
 </head>
 
@@ -26,49 +165,19 @@
     </header>
 
     <main class="flex-main">
-        <form class="flex-form">
+        <form class="flex-form" id="flex-form">
             <div class="flex-label">
                 <label for="nome">Nome</label>
                 <input type="text" name="nome" id="nome">
             </div>
-            <div class="flex-select">
-                <label for="Alimentos">Alimento 1</label>
-                <select name="unidades" id="unidade">
-                    <option value="a1">Alimento1</option>
-                    <option value="a2">Alimento 2</option>
-                </select>
-                <label for="quantidade">Quantidade</label>
-                <input type="text" name="quantidade" id="quantidade">
-                
-            </div>
+            
 
-            <div class="flex-select">
-                <label for="Alimentos">Alimento 2</label>
-                <select name="unidades" id="unidade">
-                    <option value="a1">Alimento1</option>
-                    <option value="a2">Alimento 2</option>
-                </select>
-                <label for="quantidade">Quantidade</label>
-                <input type="text" name="quantidade" id="quantidade">
-                
-            </div>
-
-            <div class="flex-select">
-                <label for="Alimentos">Alimento 3</label>
-                <select name="unidades" id="unidade">
-                    <option value="a1">Alimento1</option>
-                    <option value="a2">Alimento 2</option>
-                </select>
-                <label for="quantidade">Quantidade</label>
-                <input type="text" name="quantidade" id="quantidade">
-                
-            </div>
-
-
-            <div class="flex-button">
-                <button type="button" id="alterar" class="alterar">Alterar</button>
-            </div>
         </form>
+
+        <div class="flex-button">
+            <button type="button" id="alterar" class="alterar">Alterar</button>
+        </div>
+
     </main>
 
     <footer class="flex-footer">
