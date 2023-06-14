@@ -18,11 +18,14 @@
 
 
         const nome = document.getElementById('nome').value 
-        const ali1 = document.getElementById('unidade1').value
+        const ali1 = document.getElementById('unidade1').textContent
+        const med1 = document.getElementById('unidade1').value
         const quant1 = document.getElementById('quantidade1').value
-        const ali2 = document.getElementById('unidade2').value 
+        const ali2 = document.getElementById('unidade2').textContent
+        const med2 = document.getElementById('unidade1').value 
         const quant2 = document.getElementById('quantidade2').value
-        const ali3 = document.getElementById('unidade3').value
+        const ali3 = document.getElementById('unidade3').textContent
+        const med3 = document.getElementById('unidade1').value
         const quant3 =  document.getElementById('quantidade3').value
         const id = refeicao.id;
 
@@ -31,7 +34,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id, nome, ali1, quant1, ali2, quant2, ali3, quant3}),
+                body: JSON.stringify({id, nome, ali1, med1, quant1, ali2, med2, quant2, ali3, med3, quant3}),
             }).then((response) => {
                 if (response.ok) {
                     console.log('Alimento alterado com sucesso');
@@ -48,6 +51,40 @@
 
 
         })
+
+
+        const botaoExcluir = document.getElementsByClassName("delete")
+
+        botaoExcluir[0].addEventListener('click', () =>{
+
+        const id = refeicao.id;
+
+
+        fetch('/refeicao/excluir', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id}),
+        }).then((response) => {
+            if (response.ok) {
+                console.log('Refeicao Excluida com sucesso');
+                window.location.href = "http://localhost:3000/inicial";
+
+            } else {
+                console.log('Erro ao excluir Refeicao');
+
+            }
+        })
+            .catch((error) => {
+                console.error('Erro:', error);
+
+            });
+
+
+        })
+
+
 
         window.onload = async () => {
 
@@ -72,7 +109,7 @@
             for(const objeto of RefeicaoData){
                 
                 const optionRef = document.createElement('option')
-                optionRef.value = objeto.nome_alimento
+                optionRef.value = objeto.medida_alimento
                 optionRef.textContent = objeto.nome_alimento
                 selectRef.appendChild(optionRef)
                 
@@ -122,11 +159,14 @@
         console.log(refeicaoData);
 
         document.getElementById('nome').value = refeicaoData.nome_refeicao;
-        document.getElementById('unidade1').value = refeicaoData.nome_alimento_1;
+        document.getElementById('unidade1').textContent = refeicaoData.nome_alimento_1;
+        document.getElementById('unidade1').value = refeicaoData.medida_alimento_1;
         document.getElementById('quantidade1').value = refeicaoData.quantidade_alimento_1;
-        document.getElementById('unidade2').value = refeicaoData.nome_alimento_2;
+        document.getElementById('unidade2').textContent = refeicaoData.nome_alimento_2;
+        document.getElementById('unidade3').value = refeicaoData.medida_alimento_2;
         document.getElementById('quantidade2').value = refeicaoData.quantidade_alimento_2;
-        document.getElementById('unidade3').value = refeicaoData.nome_alimento_3;
+        document.getElementById('unidade3').textContent = refeicaoData.nome_alimento_3;
+        document.getElementById('unidade3').value = refeicaoData.medida_alimento_3;
         document.getElementById('quantidade3').value = refeicaoData.quantidade_alimento_3;
         refeicao.id = refeicaoData.id;
         
@@ -165,6 +205,11 @@
     </header>
 
     <main class="flex-main">
+
+        <div class="flex-delete">
+            <button class="delete" id="delete"> Excluir</button>
+        </div>
+
         <form class="flex-form" id="flex-form">
             <div class="flex-label">
                 <label for="nome">Nome</label>

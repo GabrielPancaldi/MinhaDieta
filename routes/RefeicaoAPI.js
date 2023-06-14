@@ -70,11 +70,11 @@ router.get('/minhas-refeicoes/:id', async (req, res) => {
 
 router.post("/cadastro", (req, res) => {
 
-    const { nome, alimento1, quantidade1, alimento2, quantidade2, alimento3, quantidade3 } = req.body
+    const { nome, alimento1, medida1, quantidade1, alimento2, medida2, quantidade2, alimento3, medida3, quantidade3} = req.body
     const id = req.session.user.id;
 
 
-    RefeicaoDAO.cadastrar(nome, alimento1, quantidade1, alimento2, quantidade2, alimento3, quantidade3, id).then(refeicao => {
+    RefeicaoDAO.cadastrar(nome, alimento1, medida1, quantidade1, alimento2, medida2, quantidade2, alimento3, medida3, quantidade3, id).then(refeicao => {
         res.json(sucess(refeicao))
     }).catch(err => {
         console.log(err)
@@ -86,15 +86,18 @@ router.post("/cadastro", (req, res) => {
 //rota para alteração da refeicao
 
 router.put("/alterar", (req, res) => {
-    const { id, nome, ali1, quant1, ali2, quant2, ali3, quant3} = req.body;
+    const { id, nome, ali1, med1, quant1, ali2, med2, quant2, ali3, med3, quant3} = req.body;
 
     let obj = {};
     if (nome) obj.nome_refeicao = nome;
     if (ali1) obj.nome_alimento_1 = ali1;
+    if(med1) obj.medida_alimento_1 = med1;
     if (quant1) obj.quantidade_alimento_1 = quant1;
     if (ali2) obj.nome_alimento_2 = ali2;
+    if(med2) obj.medida_alimento_1 = med2;
     if (quant2) obj.quantidade_alimento_2 = quant2;
     if (ali3) obj.nome_alimento_3 = ali3;
+    if(med3) obj.medida_alimento_1 = med3;
     if (quant3) obj.quantidade_alimento_3 = quant3;
 
     if (obj == {}) {

@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheet/inicial.css">
     <script type="module">
 
-        const cardRefeicao = (nomeRef, nomeAli1, quantidadeAli1, nomeAli2, quantidadeAli2, nomeAli3, quantidadeAli3, id) => {
+        const cardRefeicao = (nomeRef, nomeAli1, medAli1, quantidadeAli1, nomeAli2, medAli2, quantidadeAli2, nomeAli3, medAli3, quantidadeAli3, id) => {
 
         let card = document.createElement("div")
         card.className = "refeicao-item"
@@ -21,6 +21,11 @@
         spanNomeAli1.className = "nomeAli1"
         spanNomeAli1.innerHTML = nomeAli1;
 
+        let spanMedidaAli1 = document.createElement("span")
+        spanMedidaAli1.className = "medAli1"
+        spanMedidaAli1.innerHTML = medAli1;
+        
+
         let spanQuantidadeAli1 = document.createElement("span")
         spanQuantidadeAli1.className = "quantidadeAli1"
         spanQuantidadeAli1.innerHTML = quantidadeAli1;
@@ -29,6 +34,10 @@
         spanNomeAli2.className = "nomeAli2"
         spanNomeAli2.innerHTML = nomeAli2;
 
+        let spanMedidaAli2 = document.createElement("span")
+        spanMedidaAli2.className = "medAli2"
+        spanMedidaAli2.innerHTML = medAli2;
+
         let spanQuantidadeAli2 = document.createElement("span")
         spanQuantidadeAli2.className = "quantidadeAli2"
         spanQuantidadeAli2.innerHTML = quantidadeAli2;
@@ -36,6 +45,10 @@
         let spanNomeAli3 = document.createElement("span")
         spanNomeAli3.className = "nomeAli3"
         spanNomeAli3.innerHTML = nomeAli3;
+
+        let spanMedidaAli3 = document.createElement("span")
+        spanMedidaAli3.className = "medAli3"
+        spanMedidaAli3.innerHTML = medAli3;
 
         let spanQuantidadeAli3 = document.createElement("span")
         spanQuantidadeAli3.className = "quantidadeAli3"
@@ -48,10 +61,13 @@
         card.appendChild(spanNomeRef)
         card.appendChild(spanNomeAli1)
         card.appendChild(spanQuantidadeAli1)
+        card.appendChild(spanMedidaAli1)
         card.appendChild(spanNomeAli2)
         card.appendChild(spanQuantidadeAli2)
+        card.appendChild(spanMedidaAli2)
         card.appendChild(spanNomeAli3)
         card.appendChild(spanQuantidadeAli3)
+        card.appendChild(spanMedidaAli3)
         card.appendChild(inputHiddenId)
 
         card.addEventListener("click", () => {
@@ -78,7 +94,7 @@
 
         for(const objeto of RefeicaoData){
 
-            cardRefeicao(objeto.nome_refeicao, objeto.nome_alimento_1, objeto.quantidade_alimento_1, objeto.nome_alimento_2, objeto.quantidade_alimento_2, objeto.nome_alimento_3, objeto.quantidade_alimento_3, objeto.id);
+            cardRefeicao(objeto.nome_refeicao, objeto.nome_alimento_1, objeto.medida_alimento_1, objeto.quantidade_alimento_1, objeto.nome_alimento_2, objeto.medida_alimento_2, objeto.quantidade_alimento_2, objeto.nome_alimento_3, objeto.medida_alimento_3, objeto.quantidade_alimento_3, objeto.id);
 
         }
 
@@ -141,12 +157,7 @@
 
     <main class="flex-main">
         <div class="refeicao-container" id="refeicao-container">
-            <div class="refeicao-item">
-                <span class="nomeRef">Café da manhã</span><br>
-                <span>Ovo </span><span>2 unidades</span><br>
-                <span>Pão integral </span><span>1 unidade</span><br>
-                <span>Café preto </span><span>100 ml</span>
-            </div>
+            
 
 
         </div>

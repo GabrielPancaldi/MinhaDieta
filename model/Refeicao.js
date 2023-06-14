@@ -5,10 +5,13 @@ const RefeicaoModel = sequelize.define('Refeicao',
     {
         nome_refeicao: DataTypes.STRING,
         nome_alimento_1: DataTypes.STRING,
+        medida_alimento_1: DataTypes.STRING,
         quantidade_alimento_1: DataTypes.INTEGER,
         nome_alimento_2: DataTypes.STRING,
+        medida_alimento_2: DataTypes.STRING,
         quantidade_alimento_2: DataTypes.INTEGER,
         nome_alimento_3: DataTypes.STRING,
+        medida_alimento_3: DataTypes.STRING,
         quantidade_alimento_3: DataTypes.INTEGER,
         id_usuario: DataTypes.INTEGER,
 
@@ -28,14 +31,17 @@ module.exports = {
     },
 
 
-    cadastrar: async function (nome_refeicao, nome_alimento_1, quantidade_alimento_1, nome_alimento_2, quantidade_alimento_2, nome_alimento_3, quantidade_alimento_3, id_usuario) {
+    cadastrar: async function (nome_refeicao, nome_alimento_1, medida_alimento_1, quantidade_alimento_1, nome_alimento_2, medida_alimento_2, quantidade_alimento_2, nome_alimento_3, medida_alimento_3, quantidade_alimento_3, id_usuario) {
         const refeicao = await RefeicaoModel.create({
             nome_refeicao: nome_refeicao,
             nome_alimento_1: nome_alimento_1,
+            medida_alimento_1: medida_alimento_1,
             quantidade_alimento_1: quantidade_alimento_1,
             nome_alimento_2: nome_alimento_2,
+            medida_alimento_2: medida_alimento_2,
             quantidade_alimento_2: quantidade_alimento_2,
             nome_alimento_3: nome_alimento_3,
+            medida_alimento_3: medida_alimento_3,
             quantidade_alimento_3: quantidade_alimento_3,
             id_usuario: id_usuario
         })

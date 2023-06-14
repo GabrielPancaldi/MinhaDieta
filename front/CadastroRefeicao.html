@@ -15,11 +15,14 @@
         botaoCad[0].addEventListener('click', () => {
 
             const nome = document.getElementById("nome").value;
-            const alimento1 = document.getElementById("unidade1").value;
+            const alimento1 = document.getElementById("unidade1").selectedOptions[0].textContent;
+            const medida1 = document.getElementById("unidade1").value;
             const quantidade1 =  document.getElementById("quantidade1").value;
-            const alimento2 = document.getElementById("unidade2").value;
+            const alimento2 = document.getElementById("unidade2").selectedOptions[0].textContent;
+            const medida2 = document.getElementById("unidade2").value;
             const quantidade2 =  document.getElementById("quantidade2").value;
-            const alimento3 = document.getElementById("unidade3").value;
+            const alimento3 = document.getElementById("unidade3").selectedOptions[0].textContent;
+            const medida3 = document.getElementById("unidade3").value;
             const quantidade3 =  document.getElementById("quantidade3").value;
 
             fetch('/refeicao/cadastro', {
@@ -27,7 +30,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ nome, alimento1, quantidade1, alimento2, quantidade2, alimento3, quantidade3 }),
+                body: JSON.stringify({ nome, alimento1, medida1, quantidade1, alimento2, medida2, quantidade2, alimento3, medida3, quantidade3 }),
             }).then((response) => {
                 if (response.ok) {
                     console.log('Refeicao Cadastrada com sucesso');
@@ -48,6 +51,9 @@
 
 
         window.onload = async () => {
+
+
+            //Chama para que ao carregar a página traga os selects contendo os selects preenchidos com os alimentos cadastrados
 
             try {
 
@@ -70,9 +76,9 @@
                 for(const objeto of alimentoData){
                     
                     const optionRef = document.createElement('option')
-                    optionRef.value = objeto.nome_alimento
+                    optionRef.value = objeto.medida_alimento
                     optionRef.textContent = objeto.nome_alimento
-                    selectRef.appendChild(optionRef)
+                    selectRef.appendChild(optionRef) 
                     
                 }
 
