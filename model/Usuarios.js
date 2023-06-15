@@ -64,6 +64,12 @@ module.exports = {
         return usuario;
     },
 
+    cadastra5: async function (obj){
+        const usuarios = await UsersModel.bulkCreate(obj);
+
+        return usuarios;
+    },
+
     buscaPorEmail: async function (email_usuario) {
         return await UsersModel.findOne({ where: { email_usuario: email_usuario }, raw: true });
     },

@@ -7,12 +7,36 @@ const jwt = require('jsonwebtoken')
 const { sucess, fail } = require("../data/resposta")
 const RefeicaoDAO = require("../model/Refeicao")
 
+//cadastra 5 refeicoes
+
+router.post("/cadastra5", (req, res) =>{
+    const refeicaoobj = [
+        {nome_refeicao: "Café da manhã", nome_alimento_1: "Ovo", medida_alimento_1: "Unidades", quantidade_alimento_1: "2", nome_alimento_2: "Banana", medida_alimento_2: "Unidades", quantidade_alimento_2: "1", nome_alimento_3: "Maçã", medida_alimento_3: "Unidades", quantidade_alimento_3: "1", id_usuario: "1"},
+        {nome_refeicao: "Almoço", nome_alimento_1: "Ovo", medida_alimento_1: "Unidades", quantidade_alimento_1: "2", nome_alimento_2: "Frango", medida_alimento_2: "Gramas", quantidade_alimento_2: "400", nome_alimento_3: "Maçã", medida_alimento_3: "Unidades", quantidade_alimento_3: "1", id_usuario: "1"},
+        {nome_refeicao: "Lanche", nome_alimento_1: "Ovo", medida_alimento_1: "Unidades", quantidade_alimento_1: "2", nome_alimento_2: "Banana", medida_alimento_2: "Unidades", quantidade_alimento_2: "1", nome_alimento_3: "Maçã", medida_alimento_3: "Unidades", quantidade_alimento_3: "1", id_usuario: "1"},
+        {nome_refeicao: "Janta", nome_alimento_1: "Ovo", medida_alimento_1: "Unidades", quantidade_alimento_1: "2", nome_alimento_2: "Banana", medida_alimento_2: "Unidades", quantidade_alimento_2: "1", nome_alimento_3: "Maçã", medida_alimento_3: "Unidades", quantidade_alimento_3: "1", id_usuario: "1"},
+        {nome_refeicao: "Ceia", nome_alimento_1: "Ovo", medida_alimento_1: "Unidades", quantidade_alimento_1: "2", nome_alimento_2: "Banana", medida_alimento_2: "Unidades", quantidade_alimento_2: "1", nome_alimento_3: "Maçã", medida_alimento_3: "Unidades", quantidade_alimento_3: "1", id_usuario: "1"},
+    ];
+
+    RefeicaoDAO.cadastra5(refeicaoobj).then(refeicoes => {
+        res.json(sucess(refeicoes))
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json(fail("Não foi possivel salvar as refeicoes"))
+    })
+
+})
+
 
 router.use((req, res, next) => {
-    const token = req.session.user.token;
-    const id = req.session.user.id;
-    next();
-})
+    if (req.session && req.session.user && req.session.user.token && req.session.user.id) {
+        const token = req.session.user.token;
+        const id = req.session.user.id;
+        next();
+    } else {
+        next();
+    }
+});
 
 
 

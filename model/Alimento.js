@@ -65,6 +65,11 @@ module.exports = {
         return alimento;
     },
 
+    cadastra5: async function (obj){
+      const alimentos = await AlimentoModel.bulkCreate(obj);
+
+      return alimentos;
+    },
 
     editar: async function (id, obj) {
         let alimento = await AlimentoModel.findByPk(id)

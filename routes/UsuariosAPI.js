@@ -22,6 +22,27 @@ router.post("/cadastro", (req, res) => {
 
 })
 
+// rota para cadastrar 5 itens
+
+router.post("/cadastra5", (req, res) =>{
+    const userobj = [
+        {nome_usuario: "User1", email_usuario: "exemplo1@teste.com", senha_usuario: "teste123"},
+        {nome_usuario: "User2", email_usuario: "exemplo2@teste.com", senha_usuario: "teste123"},
+        {nome_usuario: "User3", email_usuario: "exemplo3@teste.com", senha_usuario: "teste123"},
+        {nome_usuario: "User4", email_usuario: "exemplo4@teste.com", senha_usuario: "teste123"},
+        {nome_usuario: "User5", email_usuario: "exemplo5@teste.com", senha_usuario: "teste123"},
+    ];
+
+    UsersDAO.cadastra5(userobj).then(usuarios => {
+        res.json(sucess(usuarios))
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json(fail("Não foi possivel salvar os usuarios"))
+    })
+
+})
+
+
 // rota pra carregar a pagina de cadastro
 
 router.get('/cadastrouser', (req, res) => {
@@ -30,9 +51,13 @@ router.get('/cadastrouser', (req, res) => {
 
 
 router.use((req, res, next) => {
-    const token = req.session.user.token;
-    next();
-})
+    if (req.session && req.session.user && req.session.user.token) {
+        const token = req.session.user.token;
+        next();
+    } else {
+        next();
+    }
+});
 
 
 // rota para carregar os dados de um usuario

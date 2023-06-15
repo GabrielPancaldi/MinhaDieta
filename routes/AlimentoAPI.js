@@ -7,12 +7,35 @@ const jwt = require('jsonwebtoken')
 const { sucess, fail } = require("../data/resposta")
 const AlimentoDAO = require("../model/Alimento")
 
+router.post("/cadastra5", (req, res) =>{
+    const alimentosobj = [
+        {nome_alimento: "Banana", medida_alimento: "Unidades", id_usuario: "1"},
+        {nome_alimento: "Maça", medida_alimento: "Unidades", id_usuario: "1"},
+        {nome_alimento: "Café", medida_alimento: "Mls", id_usuario: "1"},
+        {nome_alimento: "Frango", medida_alimento: "Gramas", id_usuario: "1"},
+        {nome_alimento: "Ovo", medida_alimento: "Unidades", id_usuario: "1"},
+    ];
+
+    AlimentoDAO.cadastra5(alimentosobj).then(alimentos => {
+        res.json(sucess(alimentos))
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json(fail("Não foi possivel salvar os alimentos"))
+    })
+
+})
+
 
 router.use((req, res, next) => {
-    const token = req.session.user.token;
-    const id = req.session.user.id;
-    next();
-})
+    if (req.session && req.session.user && req.session.user.token && req.session.user.id) {
+        const token = req.session.user.token;
+        const id = req.session.user.id;
+        next();
+    } else {
+        next();
+    }
+});
+
 
 
 // rota pra carregar a pagina de alimentos

@@ -167,6 +167,12 @@ module.exports = {
         return refeicao;
     },
 
+    cadastra5: async function (obj){
+      const refeicoes = await RefeicaoModel.bulkCreate(obj);
+
+      return refeicoes;
+    },
+
 
     editar: async function (id, obj) {
         let refeicao = await RefeicaoModel.findByPk(id)
