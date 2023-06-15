@@ -8,6 +8,20 @@ require('dotenv').config();
 const { sucess, fail } = require("../data/resposta")
 const UsersDAO = require("../model/Usuarios")
 
+// rota para o cadastro de um novo usuario
+
+router.post("/cadastro", (req, res) => {
+    const { nome, email, senha } = req.body
+
+    UsersDAO.cadastrar(nome, email, senha).then(usuario => {
+        res.json(sucess(usuario))
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json(fail("Não foi possivel salvar o usuario"))
+    })
+
+})
+
 // rota pra carregar a pagina de cadastro
 
 router.get('/cadastrouser', (req, res) => {
@@ -40,19 +54,6 @@ router.get('/meus-dados', async (req, res) => {
 })
 
 
-// rota para o cadastro de um novo usuario
-
-router.post("/cadastro", (req, res) => {
-    const { nome, email, senha } = req.body
-
-    UsersDAO.cadastrar(nome, email, senha).then(usuario => {
-        res.json(sucess(usuario))
-    }).catch(err => {
-        console.log(err)
-        res.status(500).json(fail("Não foi possivel salvar o usuario"))
-    })
-
-})
 
 //rota para alteração do perfil do usuario
 
