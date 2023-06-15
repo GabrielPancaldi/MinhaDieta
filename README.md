@@ -31,13 +31,13 @@ logados utilizando JWT (API e cliente)~~
 - Listar os dados de pelo menos uma das coleções gerenciadas pela aplicação,
 permitindo paginação e ordenação pelos diferentes atributos
 - ~~Mostrar os detalhes de um registro de cada coleção~~
-- Inserir novos registros para cada coleção com a devida validação
+- ~~Inserir novos registros para cada coleção com a devida validação~~
 - ~~Alterar um registro para cada coleção~~
 - ~~Excluir um registro de cada coleção~~
 - ~~Desenvolver um relacionamento (1-N ou N-M) entre estas coleções, tal que em
 um dos formulários de cadastros tenha que se escolher um ou muitos itens
 relacionado ao outro tipo~~
-- Fazer a validação de entradas de dados no cliente e no servidor
+- ~~Fazer a validação de entradas de dados no cliente e no servidor~~
 - ~~Fazer tratamento de erros no cliente e no servidor~~
 - ~~Atualizar o arquivo de configuração com os detalhes de acesso ao banco de
 dados~~
