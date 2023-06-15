@@ -37,13 +37,14 @@
         botaoCad[0].addEventListener('click', () => {
             const nome = document.getElementById("nome").value;
             const medida = document.getElementById("unidade").value;
+            const infnutri = document.getElementById("infnutri").value;
 
             fetch('/alimento/cadastro', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ nome, medida }),
+                body: JSON.stringify({ nome, medida, infnutri }),
             }).then((response) => {
                 if (response.ok) {
                     console.log('Alimento cadastrado com sucesso');
@@ -115,6 +116,11 @@
                     <option value="Colheres de sopa">Colher de sopa</option>
                     <option value="Colheres de chá">Colher de chá</option>S
                 </select>
+            </div>
+
+            <div class="flex-label">
+                <label for="nome">Informacao Nutricional</label>
+                <input type="text" name="infnutri" id="infnutri">
             </div>
 
 

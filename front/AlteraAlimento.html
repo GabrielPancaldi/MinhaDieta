@@ -43,6 +43,7 @@
 
             const nome = document.getElementById("nome").value;
             const medida = document.getElementById("unidade").value;
+            const infnutri = document.getElementById("infnutri").value
             const id = alimento.id;
 
             fetch('/alimento/alterar', {
@@ -50,7 +51,7 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id, nome, medida}),
+                body: JSON.stringify({id, nome, medida, infnutri}),
             }).then((response) => {
                 if (response.ok) {
                     
@@ -188,6 +189,11 @@
                     <option value="Colher de sopa">Colher de sopa</option>
                     <option value="Colher de chá">Colher de chá</option>S
                 </select>
+            </div>
+
+            <div class="flex-label">
+                <label for="nome">Informacao Nutricional</label>
+                <input type="text" name="infnutri" id="infnutri">
             </div>
 
 

@@ -98,11 +98,11 @@ router.get('/meus-alimentos/:id', async (req, res) => {
 
 router.post("/cadastro", (req, res) => {
 
-    const { nome, medida } = req.body
+    const { nome, medida, infnutri } = req.body
     const id = req.session.user.id;
 
 
-    AlimentoDAO.cadastrar(nome, medida, id).then(alimento => {
+    AlimentoDAO.cadastrar(nome, medida, infnutri, id).then(alimento => {
         res.json(sucess(alimento))
     }).catch(err => {
         console.log(err)
@@ -114,11 +114,12 @@ router.post("/cadastro", (req, res) => {
 //rota para alteração do alimento
 
 router.put("/alterar", (req, res) => {
-    const { id, nome, medida} = req.body;
+    const { id, nome, medida, infnutri} = req.body;
 
     let obj = {};
     if (nome) obj.nome_alimento = nome;
     if (medida) obj.medida_alimento = medida;
+    if (infnutri) obj.informacao_nutricional = infnutri;
 
     if (obj == {}) {
         return res.status(500).json(fail("Nenhum atributo foi modificado"))

@@ -27,6 +27,18 @@ const AlimentoModel = sequelize.define('Alimentos',
               },
             },
           },
+          informacao_nutricional: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+              notNull: {
+                msg: 'A informacao nutricional é obrigatória.',
+              },
+              notEmpty: {
+                msg: 'A informacao nutricional não pode estar vazia.',
+              },
+            },
+          },
           id_usuario: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -56,11 +68,12 @@ module.exports = {
     },
 
 
-    cadastrar: async function (nome_alimento, medida_alimento, id_usuario) {
+    cadastrar: async function (nome_alimento, medida_alimento, informacao_nutricional, id_usuario) {
         const alimento = await AlimentoModel.create({
             nome_alimento: nome_alimento,
             medida_alimento: medida_alimento,
-            id_usuario: id_usuario
+            informacao_nutricional: informacao_nutricional,
+            id_usuario: id_usuario,
         })
         return alimento;
     },

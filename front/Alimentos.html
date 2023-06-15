@@ -33,7 +33,7 @@
         });
 
         
-        const cardAlimento = (nomeAli, medidaAli, id) => {
+        const cardAlimento = (nomeAli, medidaAli, infNutri, id) => {
 
             let card = document.createElement("div")
             card.className = "alimento-item"
@@ -47,6 +47,10 @@
             medida.className = "unidade"
             medida.innerHTML = medidaAli;
 
+            let spanInfNutri = document.createElement("span")
+            spanInfNutri.className = "infNutri"
+            spanInfNutri.innerHTML = infNutri;
+
 
             const inputHiddenId = document.createElement("input")
             inputHiddenId.type = 'hidden'
@@ -54,6 +58,7 @@
 
             card.appendChild(spanNomeAli)
             card.appendChild(medida)
+            card.appendChild(spanInfNutri)
             card.appendChild(inputHiddenId)
 
             card.addEventListener("click", () => {
@@ -79,7 +84,7 @@
                 
                 for(const objeto of alimentoData){
 
-                    cardAlimento(objeto.nome_alimento, objeto.medida_alimento, objeto.id);
+                    cardAlimento(objeto.nome_alimento, objeto.medida_alimento, objeto.informacao_nutricional, objeto.id);
 
                 }
 
