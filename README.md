@@ -2,7 +2,7 @@
 
 # FASE 1
 
-~~- Definir um nome (e um logo) para o sistema
+~~- Definir um nome (e um logo) para o sistema~~
 - Criar um repositório na plataforma GitHub
 - Definir um template e padrão visual para o site (cabeçalho e rodapé)
 - Criar um arquivo para conter as configurações da aplicação web como senhas e
