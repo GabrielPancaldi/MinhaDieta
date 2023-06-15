@@ -41,7 +41,7 @@ relacionado ao outro tipo~~
 - ~~Fazer tratamento de erros no cliente e no servidor~~
 - ~~Atualizar o arquivo de configuração com os detalhes de acesso ao banco de
 dados~~
-- Implementar uma rota que realiza uma carga automática dos dados, tal que,
-cada coleção tenha ao menos 5 registros prévios
+- ~~Implementar uma rota que realiza uma carga automática dos dados, tal que,
+cada coleção tenha ao menos 5 registros prévios~~
 - Desenvolver uma rota que apresente um relatório no formato de gráfico e que
 pode ser exportado em PDF
