@@ -3,9 +3,42 @@ const sequelize = require("../data/mysql")
 
 const AlimentoModel = sequelize.define('Alimentos',
     {
-        nome_alimento: DataTypes.STRING,
-        medida_alimento: DataTypes.STRING,
-        id_usuario: DataTypes.INTEGER,
+        nome_alimento: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+              notNull: {
+                msg: 'O nome do alimento é obrigatório.',
+              },
+              notEmpty: {
+                msg: 'O nome do alimento não pode estar vazio.',
+              },
+            },
+          },
+          medida_alimento: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+              notNull: {
+                msg: 'A medida do alimento é obrigatória.',
+              },
+              notEmpty: {
+                msg: 'A medida do alimento não pode estar vazia.',
+              },
+            },
+          },
+          id_usuario: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+              notNull: {
+                msg: 'O ID do usuário é obrigatório.',
+              },
+              isInt: {
+                msg: 'O ID do usuário deve ser um número inteiro.',
+              },
+            },
+          },
 
     }
 )

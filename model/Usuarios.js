@@ -3,10 +3,52 @@ const sequelize = require("../data/mysql")
 
 const UsersModel = sequelize.define('Users',
     {
-        nome_usuario: DataTypes.STRING,
-        email_usuario: DataTypes.STRING,
-        senha_usuario: DataTypes.STRING
-
+        nome_usuario: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+              notNull: {
+                msg: 'O nome do usuário é obrigatório.',
+              },
+              notEmpty: {
+                msg: 'O nome do usuário não pode estar vazio.',
+              },
+            },
+          },
+          email_usuario: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: {
+              msg: 'O e-mail já está em uso.',
+            },
+            validate: {
+              notNull: {
+                msg: 'O e-mail do usuário é obrigatório.',
+              },
+              notEmpty: {
+                msg: 'O e-mail do usuário não pode estar vazio.',
+              },
+              isEmail: {
+                msg: 'O e-mail do usuário deve ser válido.',
+              },
+            },
+          },
+          senha_usuario: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+              notNull: {
+                msg: 'A senha do usuário é obrigatória.',
+              },
+              notEmpty: {
+                msg: 'A senha do usuário não pode estar vazia.',
+              },
+              len: {
+                args: [6, 20],
+                msg: 'A senha do usuário deve ter entre 6 e 20 caracteres.',
+              },
+            },
+          },
     }
 )
 

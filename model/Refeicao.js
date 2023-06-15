@@ -1,22 +1,141 @@
 const { Sequelize, DataTypes } = require("sequelize")
 const sequelize = require("../data/mysql")
 
-const RefeicaoModel = sequelize.define('Refeicao',
-    {
-        nome_refeicao: DataTypes.STRING,
-        nome_alimento_1: DataTypes.STRING,
-        medida_alimento_1: DataTypes.STRING,
-        quantidade_alimento_1: DataTypes.INTEGER,
-        nome_alimento_2: DataTypes.STRING,
-        medida_alimento_2: DataTypes.STRING,
-        quantidade_alimento_2: DataTypes.INTEGER,
-        nome_alimento_3: DataTypes.STRING,
-        medida_alimento_3: DataTypes.STRING,
-        quantidade_alimento_3: DataTypes.INTEGER,
-        id_usuario: DataTypes.INTEGER,
-
-    }
-)
+const RefeicaoModel = sequelize.define('Refeicao', {
+    nome_refeicao: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'O nome da refeição é obrigatório.',
+        },
+        notEmpty: {
+          msg: 'O nome da refeição não pode estar vazio.',
+        },
+      },
+    },
+    nome_alimento_1: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'O nome do alimento 1 é obrigatório.',
+        },
+        notEmpty: {
+          msg: 'O nome do alimento 1 não pode estar vazio.',
+        },
+      },
+    },
+    medida_alimento_1: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'A medida do alimento 1 é obrigatória.',
+        },
+        notEmpty: {
+          msg: 'A medida do alimento 1 não pode estar vazia.',
+        },
+      },
+    },
+    quantidade_alimento_1: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'A quantidade do alimento 1 é obrigatória.',
+        },
+        isInt: {
+          msg: 'A quantidade do alimento 1 deve ser um número inteiro.',
+        },
+      },
+    },
+    nome_alimento_2: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'O nome do alimento 2 é obrigatório.',
+        },
+        notEmpty: {
+          msg: 'O nome do alimento 2 não pode estar vazio.',
+        },
+      },
+    },
+    medida_alimento_2: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'A medida do alimento 2 é obrigatória.',
+        },
+        notEmpty: {
+          msg: 'A medida do alimento 2 não pode estar vazia.',
+        },
+      },
+    },
+    quantidade_alimento_2: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'A quantidade do alimento 2 é obrigatória.',
+        },
+        isInt: {
+          msg: 'A quantidade do alimento 2 deve ser um número inteiro.',
+        },
+      },
+    },
+    nome_alimento_3: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'O nome do alimento 3 é obrigatório.',
+        },
+        notEmpty: {
+          msg: 'O nome do alimento 3 não pode estar vazio.',
+        },
+      },
+    },
+    medida_alimento_3: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'A medida do alimento 3 é obrigatória.',
+        },
+        notEmpty: {
+          msg: 'A medida do alimento 3 não pode estar vazia.',
+        },
+      },
+    },
+    quantidade_alimento_3: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'A quantidade do alimento 3 é obrigatória.',
+        },
+        isInt: {
+          msg: 'A quantidade do alimento 3 deve ser um número inteiro.',
+        },
+      },
+    },
+    id_usuario: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'O ID do usuário é obrigatório.',
+        },
+        isInt: {
+          msg: 'O ID do usuário deve ser um número inteiro.',
+        },
+      },
+    },
+  });
+  
 
 RefeicaoModel.sync();
 
