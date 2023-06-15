@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const { sucess, fail } = require("../data/resposta")
 const UsersDAO = require("../model/Usuarios")
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 
 router.get('/', (req, res) => {
@@ -86,7 +87,7 @@ router.post('/login', async (req, res) => {
 
         if (obj && obj.senha_usuario == senha) {
             // Permissao = Criar token
-            const token = jwt.sign({ email: email }, '13579', {
+            const token = jwt.sign({ email: email }, process.env.JWT_SECRET, {
                 expiresIn: '1 hr'
             });
 

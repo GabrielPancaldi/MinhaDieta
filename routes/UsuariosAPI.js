@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 var path = require('path');
 const jwt = require('jsonwebtoken')
+require('dotenv').config();
 
 
 const { sucess, fail } = require("../data/resposta")
@@ -26,7 +27,7 @@ router.get('/meus-dados', async (req, res) => {
 
     const token = req.session.user.token;
 
-    const dados = jwt.verify(token, '13579');
+    const dados = jwt.verify(token, process.env.JWT_SECRET);
 
     try {
         const obj = await UsersDAO.buscaPorEmail(dados.email)

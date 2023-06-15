@@ -6,6 +6,8 @@
     <title>MinhaDieta</title>
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
     <link rel="stylesheet" type="text/css" href="/stylesheet/alteraRefeicao.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 
     <script type="module">
 
@@ -14,26 +16,23 @@
         const botaoLogout = document.getElementById("logout")
 
         botaoLogout.addEventListener('click', () => {
-           
             fetch('/usuario/logout', {
                 method: "POST",
             }).then((response) => {
                 if (response.ok) {
-                    console.log('Logout feito  com sucesso');
-                    window.location.href = "http://localhost:3000/"
-                    
-
+                    console.log('Logout feito com sucesso');
+                    Swal.fire('Sucesso', 'Logout feito com sucesso', 'success').then(() => {
+                        window.location.href = "http://localhost:3000/";
+                    });
                 } else {
                     console.log('Erro ao fazer logout');
-
+                    Swal.fire('Erro', 'Erro ao fazer logout', 'error');
                 }
-            })
-                .catch((error) => {
-                    console.error('Erro:', error);
-
-                });
-            
-        })
+            }).catch((error) => {
+                console.error('Erro:', error);
+                Swal.fire('Erro', 'Erro: ' + error, 'error');
+            });
+        });
 
         const botao = document.getElementsByClassName("alterar")
 
@@ -61,16 +60,16 @@
                 body: JSON.stringify({id, nome, ali1, med1, quant1, ali2, med2, quant2, ali3, med3, quant3}),
             }).then((response) => {
                 if (response.ok) {
-                    console.log('Alimento alterado com sucesso');
+                    Swal.fire('Sucesso', 'Refeição alterada com sucesso', 'success');
 
                 } else {
-                    console.log('Erro ao alterar alimento');
+                    Swal.fire('Erro', 'Erro ao alterar refeição', 'error');
 
                 }
             })
                 .catch((error) => {
                     console.error('Erro:', error);
-
+                    Swal.fire('Erro', 'Erro: ' + error, 'error');
                 });
 
 
@@ -92,16 +91,17 @@
             body: JSON.stringify({id}),
         }).then((response) => {
             if (response.ok) {
-                console.log('Refeicao Excluida com sucesso');
+                Swal.fire('Sucesso', 'Refeição excluída com sucesso', 'success').then(() => {
                 window.location.href = "http://localhost:3000/inicial";
+            });
 
             } else {
-                console.log('Erro ao excluir Refeicao');
+                Swal.fire('Erro', 'Erro ao excluir refeição', 'error');
 
             }
         })
             .catch((error) => {
-                console.error('Erro:', error);
+                Swal.fire('Erro', 'Erro: ' + error, 'error');
 
             });
 

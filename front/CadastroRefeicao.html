@@ -6,6 +6,8 @@
     <title>MinhaDieta</title>
     <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
     <link rel="stylesheet" type="text/css" href="/stylesheet/cadastroRefeicao.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
 
 
     <script type="module">
@@ -13,31 +15,27 @@
         const botaoLogout = document.getElementById("logout")
 
         botaoLogout.addEventListener('click', () => {
-        
             fetch('/usuario/logout', {
                 method: "POST",
             }).then((response) => {
                 if (response.ok) {
-                    console.log('Logout feito  com sucesso');
-                    window.location.href = "http://localhost:3000/"
-                    
-
+                    console.log('Logout feito com sucesso');
+                    Swal.fire('Sucesso', 'Logout feito com sucesso', 'success').then(() => {
+                        window.location.href = "http://localhost:3000/";
+                    });
                 } else {
                     console.log('Erro ao fazer logout');
-
+                    Swal.fire('Erro', 'Erro ao fazer logout', 'error');
                 }
-            })
-                .catch((error) => {
-                    console.error('Erro:', error);
-
-                });
-            
-        })
+            }).catch((error) => {
+                console.error('Erro:', error);
+                Swal.fire('Erro', 'Erro: ' + error, 'error');
+            });
+        });
 
         const botaoCad = document.getElementsByClassName("cadastro");
 
         botaoCad[0].addEventListener('click', () => {
-
             const nome = document.getElementById("nome").value;
             const alimento1 = document.getElementById("unidade1").selectedOptions[0].textContent;
             const medida1 = document.getElementById("unidade1").value;
@@ -57,21 +55,20 @@
                 body: JSON.stringify({ nome, alimento1, medida1, quantidade1, alimento2, medida2, quantidade2, alimento3, medida3, quantidade3 }),
             }).then((response) => {
                 if (response.ok) {
-                    console.log('Refeicao Cadastrada com sucesso');
-                    window.location.href = "http://localhost:3000/inicial";
-
-
+                    console.log('Refeição cadastrada com sucesso');
+                    Swal.fire('Sucesso', 'Refeição cadastrada com sucesso', 'success').then(() => {
+                        window.location.href = "http://localhost:3000/inicial";
+                    });
                 } else {
-                    console.log('Erro ao cadastrar Refeicao');
-
+                    console.log('Erro ao cadastrar refeição');
+                    Swal.fire('Erro', 'Erro ao cadastrar refeição', 'error');
                 }
-            })
-                .catch((error) => {
-                    console.error('Erro:', error);
+            }).catch((error) => {
+                console.error('Erro:', error);
+                Swal.fire('Erro', 'Erro: ' + error, 'error');
+            });
+        });
 
-                });
-
-        })
 
 
         window.onload = async () => {
