@@ -101,4 +101,12 @@ router.delete("/meu-perfil/excluir", (req, res) => {
 
 })
 
+router.post('/logout', (req, res) =>{
+
+    req.session.destroy();
+
+    res.render('index');
+
+})
+
 module.exports = router

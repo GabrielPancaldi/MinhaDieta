@@ -11,6 +11,30 @@
 
         const refeicao = {};
 
+        const botaoLogout = document.getElementById("logout")
+
+        botaoLogout.addEventListener('click', () => {
+           
+            fetch('/usuario/logout', {
+                method: "POST",
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Logout feito  com sucesso');
+                    window.location.href = "http://localhost:3000/"
+                    
+
+                } else {
+                    console.log('Erro ao fazer logout');
+
+                }
+            })
+                .catch((error) => {
+                    console.error('Erro:', error);
+
+                });
+            
+        })
+
         const botao = document.getElementsByClassName("alterar")
 
         
@@ -18,13 +42,13 @@
 
 
         const nome = document.getElementById('nome').value 
-        const ali1 = document.getElementById('unidade1').textContent
+        const ali1 = document.getElementById("unidade1").selectedOptions[0].textContent;
         const med1 = document.getElementById('unidade1').value
         const quant1 = document.getElementById('quantidade1').value
-        const ali2 = document.getElementById('unidade2').textContent
+        const ali2 = document.getElementById("unidade2").selectedOptions[0].textContent;
         const med2 = document.getElementById('unidade1').value 
         const quant2 = document.getElementById('quantidade2').value
-        const ali3 = document.getElementById('unidade3').textContent
+        const ali3 = document.getElementById("unidade3").selectedOptions[0].textContent;
         const med3 = document.getElementById('unidade1').value
         const quant3 =  document.getElementById('quantidade3').value
         const id = refeicao.id;
@@ -95,6 +119,8 @@
         if (response.ok) {
             const RefeicaoData = await response.json();
 
+            console.log(RefeicaoData);
+
         for(let i = 1; i<=3; i++){
 
             let cadSel = document.createElement("div");
@@ -159,13 +185,13 @@
         console.log(refeicaoData);
 
         document.getElementById('nome').value = refeicaoData.nome_refeicao;
-        document.getElementById('unidade1').textContent = refeicaoData.nome_alimento_1;
+        //document.getElementById('unidade1').selectedOptions[0].textContent = refeicaoData.nome_alimento_1;
         document.getElementById('unidade1').value = refeicaoData.medida_alimento_1;
         document.getElementById('quantidade1').value = refeicaoData.quantidade_alimento_1;
-        document.getElementById('unidade2').textContent = refeicaoData.nome_alimento_2;
-        document.getElementById('unidade3').value = refeicaoData.medida_alimento_2;
+        //document.getElementById('unidade2').selectedOptions[0].textContent = refeicaoData.nome_alimento_2;
+        document.getElementById('unidade2').value = refeicaoData.medida_alimento_2;
         document.getElementById('quantidade2').value = refeicaoData.quantidade_alimento_2;
-        document.getElementById('unidade3').textContent = refeicaoData.nome_alimento_3;
+       //document.getElementById('unidade3').selectedOptions[0].textContent = refeicaoData.nome_alimento_3;
         document.getElementById('unidade3').value = refeicaoData.medida_alimento_3;
         document.getElementById('quantidade3').value = refeicaoData.quantidade_alimento_3;
         refeicao.id = refeicaoData.id;
@@ -180,7 +206,12 @@
         console.error('Erro ao obter os dados do alimento:', error);
         }
 
-        
+        const botaoMinhaRef = document.getElementById("minhaRef")
+
+            botaoMinhaRef.addEventListener('click', () => {
+                window.location.href = "http://localhost:3000/inicial";
+            })
+
 
         }
 
@@ -226,10 +257,10 @@
     </main>
 
     <footer class="flex-footer">
-        <span>Desenvolvedor</span>
-        <span>Contato</span>
-        <span>Sobre</span>
-        <span>Tecnologia</span>
+        <a href="http://localhost:3000/desenvolvedor">Desenvolvedor</a>
+        <a href="http://localhost:3000/contato" >Contato</a>
+        <a href="http://localhost:3000/sobre" >Sobre</a>
+        <a href="http://localhost:3000/tecnologia" >Tecnologia</a>
     </footer>
 
 
