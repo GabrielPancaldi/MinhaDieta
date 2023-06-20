@@ -1,4 +1,5 @@
 # MinhaDieta
+<<<<<<< HEAD
 
 # FASE 1
 
@@ -45,3 +46,5 @@ dados~~
 cada coleção tenha ao menos 5 registros prévios~~
 - Desenvolver uma rota que apresente um relatório no formato de gráfico e que
 pode ser exportado em PDF
+=======
+>>>>>>> master

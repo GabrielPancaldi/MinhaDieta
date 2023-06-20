@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MinhaDieta</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
+    <link rel="stylesheet" type="text/css" href="stylesheet/alimento.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+
+    <script type="module">
+
+    const botaoLogout = document.getElementById("logout")
+
+        botaoLogout.addEventListener('click', () => {
+            fetch('/usuario/logout', {
+                method: "POST",
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Logout feito com sucesso');
+                    Swal.fire('Sucesso', 'Logout feito com sucesso', 'success').then(() => {
+                        window.location.href = "http://localhost:3000/";
+                    });
+                } else {
+                    console.log('Erro ao fazer logout');
+                    Swal.fire('Erro', 'Erro ao fazer logout', 'error');
+                }
+            }).catch((error) => {
+                console.error('Erro:', error);
+                Swal.fire('Erro', 'Erro: ' + error, 'error');
+            });
+        });
+
+        
+        const cardAlimento = (nomeAli, medidaAli, infNutri, id) => {
+
+            let card = document.createElement("div")
+            card.className = "alimento-item"
+
+
+            let spanNomeAli = document.createElement("span")
+            spanNomeAli.className = "nomeAli"
+            spanNomeAli.innerHTML = nomeAli;
+
+            let medida = document.createElement("span")
+            medida.className = "unidade"
+            medida.innerHTML = medidaAli;
+
+            let spanInfNutri = document.createElement("span")
+            spanInfNutri.className = "infNutri"
+            spanInfNutri.innerHTML = infNutri;
+
+
+            const inputHiddenId = document.createElement("input")
+            inputHiddenId.type = 'hidden'
+            inputHiddenId.hidden = id
+
+            card.appendChild(spanNomeAli)
+            card.appendChild(medida)
+            card.appendChild(spanInfNutri)
+            card.appendChild(inputHiddenId)
+
+            card.addEventListener("click", () => {
+                window.location.href = "http://localhost:3000/alimento/editarAlimento?id=" + id
+            })
+
+
+            document.getElementById("alimento-container").appendChild(card)
+        }
+
+
+        window.onload = async () => {
+            try {
+
+                const response = await fetch('/alimento/meus-alimentos');
+
+                if (response.ok) {
+                    const alimentoData = await response.json();
+
+                    
+                console.log(alimentoData);
+
+                
+                for(const objeto of alimentoData){
+
+                    cardAlimento(objeto.nome_alimento, objeto.medida_alimento, objeto.informacao_nutricional, objeto.id);
+
+                }
+
+
+                    console.log('Dados do alimento carregados com sucesso!');
+                } else {
+                    console.error('Erro ao obter os dados do alimento:', response.status);
+                }
+            } catch (error) {
+                console.error('Erro ao obter os dados do alimento:', error);
+            }
+
+            const botaoNovo = document.getElementsByClassName("novoAli");
+
+            botaoNovo[0].addEventListener('click', () =>{
+                window.location.href = "http://localhost:3000/alimento/cadastroAlimento";
+            })
+
+            const botaoMinhaRef = document.getElementById("minhaRef")
+
+            botaoMinhaRef.addEventListener('click', () => {
+                window.location.href = "http://localhost:3000/inicial";
+            })
+
+        };
+
+
+    </script>
+
+
+</head>
+
+<body class="flex-container">
+
+    <header class="flex-header">
+
+        <div class="logo">
+            <img class="dieta" src="/imgs/dieta.png" alt="">
+            <span>MinhaDieta</span>
+        </div>
+
+        <div class="header-buttons">
+            <button id="minhaRef">Minhas Refeições</button>
+            <button id="logout">Logout</button>
+        </div>
+
+    </header>
+
+
+
+    <main class="flex-main">
+
+
+        <div class="alimento-container" id="alimento-container">
+
+
+        </div>
+
+        <div class="flex-button">
+            <button class="novoAli" id="novoAli">Novo Alimento</button>
+        </div>
+
+    </main>
+
+    <footer class="flex-footer">
+        <a href="http://localhost:3000/desenvolvedor">Desenvolvedor</a>
+        <a href="http://localhost:3000/contato" >Contato</a>
+        <a href="http://localhost:3000/sobre" >Sobre</a>
+        <a href="http://localhost:3000/tecnologia" >Tecnologia</a>
+    </footer>
+
+
+</body>
+
+</html>

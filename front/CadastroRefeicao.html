@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MinhaDieta</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/dieta.png">
+    <link rel="stylesheet" type="text/css" href="/stylesheet/cadastroRefeicao.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+
+
+    <script type="module">
+
+        const botaoLogout = document.getElementById("logout")
+
+        botaoLogout.addEventListener('click', () => {
+            fetch('/usuario/logout', {
+                method: "POST",
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Logout feito com sucesso');
+                    Swal.fire('Sucesso', 'Logout feito com sucesso', 'success').then(() => {
+                        window.location.href = "http://localhost:3000/";
+                    });
+                } else {
+                    console.log('Erro ao fazer logout');
+                    Swal.fire('Erro', 'Erro ao fazer logout', 'error');
+                }
+            }).catch((error) => {
+                console.error('Erro:', error);
+                Swal.fire('Erro', 'Erro: ' + error, 'error');
+            });
+        });
+
+        const botaoCad = document.getElementsByClassName("cadastro");
+
+        botaoCad[0].addEventListener('click', () => {
+            const nome = document.getElementById("nome").value;
+            const alimento1 = document.getElementById("unidade1").selectedOptions[0].textContent;
+            const medida1 = document.getElementById("unidade1").value;
+            const quantidade1 =  document.getElementById("quantidade1").value;
+            const alimento2 = document.getElementById("unidade2").selectedOptions[0].textContent;
+            const medida2 = document.getElementById("unidade2").value;
+            const quantidade2 =  document.getElementById("quantidade2").value;
+            const alimento3 = document.getElementById("unidade3").selectedOptions[0].textContent;
+            const medida3 = document.getElementById("unidade3").value;
+            const quantidade3 =  document.getElementById("quantidade3").value;
+
+            fetch('/refeicao/cadastro', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nome, alimento1, medida1, quantidade1, alimento2, medida2, quantidade2, alimento3, medida3, quantidade3 }),
+            }).then((response) => {
+                if (response.ok) {
+                    console.log('Refeição cadastrada com sucesso');
+                    Swal.fire('Sucesso', 'Refeição cadastrada com sucesso', 'success').then(() => {
+                        window.location.href = "http://localhost:3000/inicial";
+                    });
+                } else {
+                    console.log('Erro ao cadastrar refeição');
+                    Swal.fire('Erro', 'Erro ao cadastrar refeição', 'error');
+                }
+            }).catch((error) => {
+                console.error('Erro:', error);
+                Swal.fire('Erro', 'Erro: ' + error, 'error');
+            });
+        });
+
+
+
+        window.onload = async () => {
+
+
+            //Chama para que ao carregar a página traga os selects contendo os selects preenchidos com os alimentos cadastrados
+
+            try {
+
+            const response = await fetch('/alimento/meus-alimentos');
+
+            if (response.ok) {
+                const alimentoData = await response.json();
+
+            for(let i = 1; i<=3; i++){
+
+                let cadSel = document.createElement("div");
+                cadSel.className = "flex-select";
+
+                const labelRef = document.createElement("label")
+                labelRef.textContent = "Alimento " + i;
+        
+                const selectRef = document.createElement('select');
+                selectRef.setAttribute('id', 'unidade' + i);
+                
+                for(const objeto of alimentoData){
+                    
+                    const optionRef = document.createElement('option')
+                    optionRef.value = objeto.medida_alimento
+                    optionRef.textContent = objeto.nome_alimento
+                    selectRef.appendChild(optionRef) 
+                    
+                }
+
+                const labelRef2 = document.createElement("label")
+                labelRef2.textContent = "Quantidade";
+
+                const inputRef = document.createElement("input")
+                inputRef.setAttribute('type', 'text');
+                inputRef.setAttribute('id', 'quantidade' + i);
+
+                cadSel.appendChild(labelRef);
+                cadSel.appendChild(selectRef);
+                cadSel.appendChild(labelRef2);
+                cadSel.appendChild(inputRef);
+
+
+                document.getElementById("flex-form").appendChild(cadSel);
+
+            }
+
+
+                console.log('Dados do alimento carregados com sucesso!');
+            } else {
+                console.error('Erro ao obter os dados do alimento:', response.status);
+            }
+            } catch (error) {
+            console.error('Erro ao obter os dados do alimento:', error);
+            }
+
+
+            const botaoMinhaRef = document.getElementById("minhaRef")
+
+            botaoMinhaRef.addEventListener('click', () => {
+                window.location.href = "http://localhost:3000/inicial";
+            })
+
+        
+
+        }
+
+
+    </script>
+
+</head>
+
+<body class="flex-container">
+
+    <header class="flex-header">
+
+        <div class="logo">
+            <img class="dieta" src="/imgs/dieta.png" alt="">
+            <span>MinhaDieta</span>
+        </div>
+
+        <div class="header-buttons">
+            <button id="minhaRef">Minhas Refeições</button>
+            <button id="logout">Logout</button>
+        </div>
+
+    </header>
+
+    <main class="flex-main">
+        <form class="flex-form" id="flex-form">
+            <div class="flex-label">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" id="nome">
+            </div>
+         
+        </form>
+
+        <div class="flex-button">
+            <button type="button" id="cadastro" class="cadastro">Cadastrar</button>
+        </div>
+    </main>
+
+    <footer class="flex-footer">
+        <a href="http://localhost:3000/desenvolvedor">Desenvolvedor</a>
+        <a href="http://localhost:3000/contato" >Contato</a>
+        <a href="http://localhost:3000/sobre" >Sobre</a>
+        <a href="http://localhost:3000/tecnologia" >Tecnologia</a>
+    </footer>
+
+
+</body>
+
+</html>
